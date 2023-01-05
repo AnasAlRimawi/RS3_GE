@@ -1,6 +1,18 @@
 import requests
+from datetime import datetime
+import pandas as pd
+def fetchGraph(item):
+    response = requests.get("https://api.weirdgloop.org/exchange/history/rs/all?name="+item)
+    dic = response.json()
+    price = []
+    time = []
+    for ele in dic[item]:
+        price.append(ele['price'])
+        timestamp = ele['timestamp'] / 1000
+        date = datetime.fromtimestamp(timestamp).strftime('%d-%m-%y')
+        time.append(date)
 
-
+    return pd.DataFrame(price[-100:],time[-100:])
 def fetchPrice(item):
     response = requests.get("https://api.weirdgloop.org/exchange/history/rs/latest?name="+item)
     price = response.json()

@@ -12,3 +12,4 @@ button2 = st.button("Look Up Price")
 if button2:
     number_with_commas = "{:,}".format(fetchPrice(selectedItem))
     st.markdown("Current price for "+ selectedItem +" is "+ number_with_commas +" GP" + ":moneybag:")
+    st.line_chart(fetchGraph(selectedItem))
